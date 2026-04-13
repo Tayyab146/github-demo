@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: app-production
+
+resources:
+  - ../../base
+  - configmap.yaml
+  - secretstore.yaml
+  - externalsecret.yaml
+
+patches:
+  - path: ingress.yaml
+    target:
+      kind: Ingress
+      name: app-ingress
+
+commonLabels:
+  app.kubernetes.io/part-of: demo-app
+  app.kubernetes.io/environment: production
